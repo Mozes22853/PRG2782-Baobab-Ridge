@@ -1,0 +1,12 @@
+# Visual Studio and .NET output
+.vs/
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+TestResults/
+*.log
+# Generated reports
+summary.txt
