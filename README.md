@@ -6,12 +6,23 @@ PRG2782 Project 2026: C# Windows Forms with plain text file storage.
 
 Requires Windows and Visual Studio with the .NET desktop development workload, or a .NET SDK capable of targeting .NET 8. The application targets `net8.0-windows` and uses no third-party storage packages.
 
-1. Clone this repository and check out `feature/add-animal` while the pull request is open. `main` initially contains the blank project.
-2. Open `BaobabRidge/BaobabRidge.csproj` in Visual Studio and select it as the startup project.
-3. Build and run. Alternatively, run `dotnet run --project BaobabRidge/BaobabRidge.csproj` from the repository folder.
+1. Clone this repository and use the `main` branch, which includes Member 1's merged work.
+2. In Visual Studio, choose **File > Open > Project/Solution** and open `PRG2782-Baobab-Ridge.sln`. This solution contains the app only; the separate `Member1Checks` program is for verification.
+3. Allow NuGet restore to finish. The run target should be **BaobabRidge**, not **Current Document (Program.cs)**. Press **F5** to run. If needed, right-click the BaobabRidge project and choose **Set as Startup Project**. Alternatively, run `dotnet run --project BaobabRidge/BaobabRidge.csproj` from the repository folder.
 4. Enter an ID such as `WR-0007`, a name, species, age, and recovery score, then select **Add animal**.
 
 The `.exe`, `animals.txt`, and supporting runtime files are in the build output folder, for example `BaobabRidge/bin/Debug/net8.0-windows/`. Runtime changes affect the output copy of the file. Avoid deleting that folder if it contains records you need. The source `animals.txt` uses **Copy if newer** (`PreserveNewest`).
+
+### If the first build reports NETSDK1004
+
+Choose **No** when Visual Studio asks whether to continue debugging a failed build. `NETSDK1004` means the generated `obj/project.assets.json` restore file is missing. These machine-generated files are intentionally not committed to Git. From a terminal in the repository folder, run:
+
+```powershell
+dotnet restore PRG2782-Baobab-Ridge.sln
+dotnet build PRG2782-Baobab-Ridge.sln --no-restore
+```
+
+Then open the solution and press F5. The first restore needs access to NuGet when the required .NET targeting packs are not installed or cached. If restore fails, resolve its first error before building again. See [Microsoft's NETSDK1004 guidance](https://learn.microsoft.com/en-us/dotnet/core/tools/sdk-errors/netsdk1004). Do not run either `Program.cs` as a standalone document. To run the checks, use the explicit project command below, which also restores that project's dependencies.
 
 The first commit contains only the blank Windows Forms project, `.gitignore`, and README. Member 1 work is developed on `feature/add-animal`.
 
