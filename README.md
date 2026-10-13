@@ -2,24 +2,48 @@
 
 PRG2782 Project 2026: C# Windows Forms with plain text file storage.
 
-## Initial setup
+## Build and run
 
-This first commit contains only the blank Windows Forms project, a Visual Studio/.NET ignore file, and this README. Feature work follows on separate branches.
+Requires Windows and Visual Studio with the .NET desktop development workload, or a .NET SDK capable of targeting .NET 8. The application targets `net8.0-windows` and uses no third-party storage packages.
 
-Open `BaobabRidge/BaobabRidge.csproj` in Visual Studio with the .NET desktop development workload and .NET 8 SDK or newer. Restore, build, and run the project. From a Windows terminal, use `dotnet run --project BaobabRidge/BaobabRidge.csproj`.
+1. Clone this repository and check out `feature/add-animal` while the pull request is open. `main` initially contains the blank project.
+2. Open `BaobabRidge/BaobabRidge.csproj` in Visual Studio and select it as the startup project.
+3. Build and run. Alternatively, run `dotnet run --project BaobabRidge/BaobabRidge.csproj` from the repository folder.
+4. Enter an ID such as `WR-0007`, a name, species, age, and recovery score, then select **Add animal**.
+
+The `.exe`, `animals.txt`, and supporting runtime files are in the build output folder, for example `BaobabRidge/bin/Debug/net8.0-windows/`. Runtime changes affect the output copy of the file. Avoid deleting that folder if it contains records you need. The source `animals.txt` uses **Copy if newer** (`PreserveNewest`).
+
+The first commit contains only the blank Windows Forms project, `.gitignore`, and README. Member 1 work is developed on `feature/add-animal`.
 
 ## Team
 
-Member names and student numbers will be supplied by the group before submission.
+| Member | Name | Student number | Responsibility |
+| --- | --- | --- | --- |
+| 1 | Tjaart van der Walt (existing Git identity; confirm) | To be supplied | Model, shared classification/validation, Add |
+| 2 | To be supplied | To be supplied | View, shared file error review, starter data |
+| 3 | To be supplied | To be supplied | Update |
+| 4 | To be supplied | To be supplied | Delete, Summary, repository documentation |
 
-## Planned features and files
+## Feature status
 
-Add, View, Update, Delete, and Summary Report.
+- **Member 1 implemented:** animal model, one classification method, shared input validation, Add, duplicate checking, UTF-8 append, field-specific feedback/focus, displayed classification, cleared inputs, and grid refresh.
+- **View integration included for Add:** initial loading, exact read-only grid columns, file order, missing-file creation, and one skipped-line count. Member 2 can extend and validate this foundation on their branch.
+- **Pending other members:** Update, Delete, Summary Report, and at least eight starter animals covering four statuses. The committed `animals.txt` is intentionally empty at this stage.
+
+## File formats
 
 `animals.txt`: UTF-8, one animal per line, seven pipe-separated fields: ID, Name, Species, Age, Score, Status, Housing Unit. No header. Stored beside the executable.
 
 `summary.txt`: generated beside the executable, overwritten for each report, with timestamp, totals, averages, and all five status counts in the assignment's required layout. Excluded from Git.
 
-## Current limitations and assistance
+## Checks and handover
 
-This is an empty scaffold; application features are not implemented yet. This repository is being developed with OpenAI Codex assistance. The project brief prohibits submitting AI-generated code or text as the group's own work. The group must resolve permitted use with its lecturer and must not misrepresent authorship. Assistance does not establish individual contribution or guarantee marks.
+Run `dotnet run --project Member1Checks/Member1Checks.csproj --configuration Release` on Windows. This package-free console checks program exercises validation, all band endpoints, append preservation, duplicate detection, malformed records, read-only/locked files, and the actual form's Add event. The form opens briefly during UI checks. File fixtures use temporary paths or the checks project's output copy and are restored afterward.
+
+See [Member 1 handover](docs/member-1-handover.md) for requirements, shared-method use, manual demonstration steps, and work still needed for submission. Lecture concepts are recorded there; supplied lecture files are not uploaded to this repository.
+
+## Known limitations and assistance
+
+The entire group project is not complete. The remaining feature branches, member details, lecturer access, genuine commits over three days, and presentation participation are still required. The file loader also rejects records whose status/housing disagree with the recovery score. Add preserves malformed existing lines and reserves their ID if their first field matches the new ID.
+
+This implementation and documentation were produced with OpenAI Codex assistance. The project brief prohibits submitting AI-generated code or text as the group's own work. The group must resolve permitted use with its lecturer and must not misrepresent authorship. Assistance does not establish individual contribution or guarantee marks. Commit messages record this assistance and use actual dates.

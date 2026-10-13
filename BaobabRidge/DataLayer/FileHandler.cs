@@ -24,7 +24,7 @@ namespace BaobabRidge.DataLayer
             {
                 if (!File.Exists(filePath))
                 {
-                    using (FileStream emptyFile = File.Create(filePath))
+                    using (FileStream emptyFile = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write))
                     {
                         // Dispose the new empty file before reading it.
                     }
