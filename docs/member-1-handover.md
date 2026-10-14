@@ -72,6 +72,14 @@ The first scaffold built successfully before it was committed. The member implem
 
 A WinForms bitmap preview was visually inspected. Visual Studio's interactive designer and multiple Windows display-scaling settings were not tested. A process crash or disk failure during a write was not simulated.
 
+## Editing the form in Visual Studio
+
+Open `PRG2782-Baobab-Ridge.sln`, right-click `PresentationLayer/MainForm.cs`, and select **View Designer** (Shift+F7). The controls are placed directly on the form with ordinary `Location` and `Size` properties. There are no layout panels or docked controls. Select a control to drag it, resize it with its handles, or edit these properties in the Properties window. If the designer has **Lock Controls** enabled, turn it off before moving controls.
+
+Drag new buttons from the Toolbox into the unused area below the grid. Use the Properties window to set each control's `(Name)` and `Text`; use the Events tab to connect an existing click handler. Preserve `txtAnimalId`, `txtName`, `txtSpecies`, `txtAge`, `txtRecoveryScore`, `btnAdd`, `dgvAnimals`, and the feedback label names so the existing code can continue using them. Grid column order and read-only settings must remain intact.
+
+Members working on an earlier branch must merge the updated `main` into their branch. If a designer-file conflict occurs, retain this simple layout and reapply their own additional controls and event hookups, preserving their feature code. Do not replace another member's form event handlers with an older copy.
+
 ## Suggested Member 1 demonstration
 
 Prepare a disposable copy of the data file for practice so real records are not lost. Explain these steps in your own words rather than reading a script:
