@@ -146,6 +146,49 @@ namespace BaobabRidge.DataLayer
             }
             return false;
         }
+        // Member3 Precision file rewriting: updates only the targeted animal record without duplication or data loss.
+        public bool TryUpdateAnimal(Animal animal, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                bool updated = false;
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    string[] parts = lines[i].Split('|');
+                    if (parts.Length >= 7 && string.Equals(parts[0].Trim(), animal.Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        lines[i] = ToFileLine(animal);
+                        updated = true;
+                        break;
+                    }
+                }
+
+                if (!updated)
+                {
+                    message = "Animal ID not found in file.";
+                    return false;
+                }
+
+                File.WriteAllLines(filePath, lines, new UTF8Encoding(false));
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                message = "Cannot modify animals.txt. Check permissions.";
+            }
+            catch (DirectoryNotFoundException)
+            {
+                message = "The folder for animals.txt could not be found.";
+            }
+            catch (IOException)
+            {
+                message = "Cannot update animals.txt. Close any program locking the file.";
+            }
+            return false;
+        }
 
         // Serializes exactly the seven required fields, with no header or extra spaces.
         public static string ToFileLine(Animal animal)

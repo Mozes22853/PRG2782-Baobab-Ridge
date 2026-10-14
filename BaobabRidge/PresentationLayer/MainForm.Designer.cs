@@ -16,112 +16,97 @@ namespace BaobabRidge.PresentationLayer
         // Creates standard WinForms controls and connects the Add and Load events.
         private void InitializeComponent()
         {
-            TableLayoutPanel layout = new TableLayoutPanel();
-            Label lblTitle = new Label();
-            Label lblSubtitle = new Label();
-            GroupBox grpAdd = new GroupBox();
-            TableLayoutPanel inputLayout = new TableLayoutPanel();
-            Label lblAnimalId = new Label();
-            Label lblName = new Label();
-            Label lblSpecies = new Label();
-            Label lblAge = new Label();
-            Label lblRecoveryScore = new Label();
-            Label lblHint = new Label();
-            DataGridViewTextBoxColumn colId = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colName = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colSpecies = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colAge = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colScore = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colStatus = new DataGridViewTextBoxColumn();
-            DataGridViewTextBoxColumn colHousing = new DataGridViewTextBoxColumn();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            layout = new TableLayoutPanel();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
+            grpAdd = new GroupBox();
+            inputLayout = new TableLayoutPanel();
+            lblAnimalId = new Label();
             txtAnimalId = new TextBox();
+            lblName = new Label();
             txtName = new TextBox();
+            lblSpecies = new Label();
             txtSpecies = new TextBox();
+            lblAge = new Label();
             txtAge = new TextBox();
+            lblRecoveryScore = new Label();
             txtRecoveryScore = new TextBox();
+            lblHint = new Label();
             btnAdd = new Button();
-            dgvAnimals = new DataGridView();
-            lblFeedback = new Label();
             lblClassification = new Label();
+            dgvAnimals = new DataGridView();
             lblLoadNotice = new Label();
+            lblFeedback = new Label();
+            layout.SuspendLayout();
+            grpAdd.SuspendLayout();
+            inputLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
             SuspendLayout();
-
-            layout.Dock = DockStyle.Fill;
-            layout.Padding = new Padding(20);
+            // 
+            // layout
+            // 
             layout.ColumnCount = 2;
-            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 310F));
+            layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 354F));
             layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            layout.RowCount = 5;
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
-            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 58F));
-
-            lblTitle.Text = "Baobab Ridge";
-            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblTitle.Dock = DockStyle.Fill;
             layout.Controls.Add(lblTitle, 0, 0);
-            layout.SetColumnSpan(lblTitle, 2);
-            lblSubtitle.Text = "Wildlife Rehabilitation Records";
-            lblSubtitle.Dock = DockStyle.Fill;
             layout.Controls.Add(lblSubtitle, 0, 1);
+            layout.Controls.Add(grpAdd, 0, 2);
+            layout.Controls.Add(dgvAnimals, 1, 2);
+            layout.Controls.Add(lblLoadNotice, 0, 3);
+            layout.Controls.Add(lblFeedback, 0, 4);
+            layout.Dock = DockStyle.Fill;
+            layout.Location = new Point(0, 0);
+            layout.Margin = new Padding(3, 4, 3, 4);
+            layout.Name = "layout";
+            layout.Padding = new Padding(23, 27, 23, 27);
+            layout.RowCount = 5;
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 53F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 53F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 73F));
+            layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 77F));
+            layout.Size = new Size(1385, 936);
+            layout.TabIndex = 0;
+            // 
+            // lblTitle
+            // 
+            layout.SetColumnSpan(lblTitle, 2);
+            lblTitle.Dock = DockStyle.Fill;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.Location = new Point(26, 27);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(1333, 53);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Baobab Ridge";
+            // 
+            // lblSubtitle
+            // 
             layout.SetColumnSpan(lblSubtitle, 2);
-
-            grpAdd.Text = "Add an animal";
+            lblSubtitle.Dock = DockStyle.Fill;
+            lblSubtitle.Location = new Point(26, 80);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(1333, 53);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Wildlife Rehabilitation Records";
+            // 
+            // grpAdd
+            // 
+            grpAdd.Controls.Add(inputLayout);
             grpAdd.Dock = DockStyle.Fill;
-            grpAdd.Padding = new Padding(12);
-            grpAdd.Margin = new Padding(0, 0, 16, 0);
-            inputLayout.Dock = DockStyle.Fill;
+            grpAdd.Location = new Point(23, 133);
+            grpAdd.Margin = new Padding(0, 0, 18, 0);
+            grpAdd.Name = "grpAdd";
+            grpAdd.Padding = new Padding(14, 16, 14, 16);
+            grpAdd.Size = new Size(336, 626);
+            grpAdd.TabIndex = 2;
+            grpAdd.TabStop = false;
+            grpAdd.Text = "Add an animal";
+            // 
+            // inputLayout
+            // 
             inputLayout.ColumnCount = 1;
-            inputLayout.RowCount = 13;
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
-            inputLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-
-            lblAnimalId.Text = "Animal ID";
-            lblName.Text = "Name";
-            lblSpecies.Text = "Species";
-            lblAge.Text = "Age (years)";
-            lblRecoveryScore.Text = "Recovery Score";
-            lblAnimalId.AutoSize = true;
-            lblName.AutoSize = true;
-            lblSpecies.AutoSize = true;
-            lblAge.AutoSize = true;
-            lblRecoveryScore.AutoSize = true;
-            txtAnimalId.Name = "txtAnimalId";
-            txtName.Name = "txtName";
-            txtSpecies.Name = "txtSpecies";
-            txtAge.Name = "txtAge";
-            txtRecoveryScore.Name = "txtRecoveryScore";
-            txtAnimalId.AccessibleName = "Animal ID";
-            txtName.AccessibleName = "Name";
-            txtSpecies.AccessibleName = "Species";
-            txtAge.AccessibleName = "Age";
-            txtRecoveryScore.AccessibleName = "Recovery Score";
-            txtAnimalId.PlaceholderText = "WR-0007";
-            txtAge.PlaceholderText = "0 to 100";
-            txtRecoveryScore.PlaceholderText = "0 to 100";
-            txtAnimalId.Dock = DockStyle.Fill;
-            txtName.Dock = DockStyle.Fill;
-            txtSpecies.Dock = DockStyle.Fill;
-            txtAge.Dock = DockStyle.Fill;
-            txtRecoveryScore.Dock = DockStyle.Fill;
-            txtAnimalId.TabIndex = 0;
-            txtName.TabIndex = 1;
-            txtSpecies.TabIndex = 2;
-            txtAge.TabIndex = 3;
-            txtRecoveryScore.TabIndex = 4;
+            inputLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             inputLayout.Controls.Add(lblAnimalId, 0, 0);
             inputLayout.Controls.Add(txtAnimalId, 0, 1);
             inputLayout.Controls.Add(lblName, 0, 2);
@@ -132,96 +117,239 @@ namespace BaobabRidge.PresentationLayer
             inputLayout.Controls.Add(txtAge, 0, 7);
             inputLayout.Controls.Add(lblRecoveryScore, 0, 8);
             inputLayout.Controls.Add(txtRecoveryScore, 0, 9);
-            lblHint.Text = "All fields are required. Status and housing are calculated automatically.";
-            lblHint.Dock = DockStyle.Fill;
             inputLayout.Controls.Add(lblHint, 0, 10);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Text = "Add animal";
-            btnAdd.Dock = DockStyle.Fill;
-            btnAdd.TabIndex = 5;
-            btnAdd.Click += btnAdd_Click;
             inputLayout.Controls.Add(btnAdd, 0, 11);
-            lblClassification.Name = "lblClassification";
-            lblClassification.Text = "No animal added yet.";
-            lblClassification.Dock = DockStyle.Fill;
-            lblClassification.Padding = new Padding(0, 12, 0, 0);
             inputLayout.Controls.Add(lblClassification, 0, 12);
-            grpAdd.Controls.Add(inputLayout);
-            layout.Controls.Add(grpAdd, 0, 2);
-
-            colId.HeaderText = "Animal ID";
-            colId.DataPropertyName = "Id";
-            colName.HeaderText = "Name";
-            colName.DataPropertyName = "Name";
-            colSpecies.HeaderText = "Species";
-            colSpecies.DataPropertyName = "Species";
-            colAge.HeaderText = "Age";
-            colAge.DataPropertyName = "Age";
-            colScore.HeaderText = "Recovery Score";
-            colScore.DataPropertyName = "RecoveryScore";
-            colStatus.HeaderText = "Status";
-            colStatus.DataPropertyName = "Status";
-            colHousing.HeaderText = "Housing Unit";
-            colHousing.DataPropertyName = "HousingUnit";
-            dgvAnimals.Columns.AddRange(colId, colName, colSpecies, colAge, colScore, colStatus, colHousing);
-            colId.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colName.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colSpecies.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colAge.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colScore.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colStatus.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colHousing.SortMode = DataGridViewColumnSortMode.NotSortable;
-            colId.MinimumWidth = 70;
-            colName.MinimumWidth = 70;
-            colSpecies.MinimumWidth = 90;
-            colScore.MinimumWidth = 80;
-            colStatus.MinimumWidth = 95;
-            colHousing.MinimumWidth = 120;
-            colAge.MinimumWidth = 45;
-            colAge.FillWeight = 50;
-            colSpecies.FillWeight = 130;
-            colHousing.FillWeight = 170;
-            dgvAnimals.Name = "dgvAnimals";
+            inputLayout.Dock = DockStyle.Fill;
+            inputLayout.Location = new Point(14, 36);
+            inputLayout.Margin = new Padding(3, 4, 3, 4);
+            inputLayout.Name = "inputLayout";
+            inputLayout.RowCount = 13;
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 33F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 53F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 67F));
+            inputLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            inputLayout.Size = new Size(308, 574);
+            inputLayout.TabIndex = 0;
+            // 
+            // lblAnimalId
+            // 
+            lblAnimalId.AutoSize = true;
+            lblAnimalId.Location = new Point(3, 0);
+            lblAnimalId.Name = "lblAnimalId";
+            lblAnimalId.Size = new Size(75, 20);
+            lblAnimalId.TabIndex = 0;
+            lblAnimalId.Text = "Animal ID";
+            // 
+            // txtAnimalId
+            // 
+            txtAnimalId.AccessibleName = "Animal ID";
+            txtAnimalId.Dock = DockStyle.Fill;
+            txtAnimalId.Location = new Point(3, 37);
+            txtAnimalId.Margin = new Padding(3, 4, 3, 4);
+            txtAnimalId.Name = "txtAnimalId";
+            txtAnimalId.PlaceholderText = "WR-0007";
+            txtAnimalId.Size = new Size(302, 27);
+            txtAnimalId.TabIndex = 0;
+            // 
+            // lblName
+            // 
+            lblName.AutoSize = true;
+            lblName.Location = new Point(3, 78);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(49, 20);
+            lblName.TabIndex = 1;
+            lblName.Text = "Name";
+            // 
+            // txtName
+            // 
+            txtName.AccessibleName = "Name";
+            txtName.Dock = DockStyle.Fill;
+            txtName.Location = new Point(3, 115);
+            txtName.Margin = new Padding(3, 4, 3, 4);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(302, 27);
+            txtName.TabIndex = 1;
+            // 
+            // lblSpecies
+            // 
+            lblSpecies.AutoSize = true;
+            lblSpecies.Location = new Point(3, 156);
+            lblSpecies.Name = "lblSpecies";
+            lblSpecies.Size = new Size(59, 20);
+            lblSpecies.TabIndex = 2;
+            lblSpecies.Text = "Species";
+            // 
+            // txtSpecies
+            // 
+            txtSpecies.AccessibleName = "Species";
+            txtSpecies.Dock = DockStyle.Fill;
+            txtSpecies.Location = new Point(3, 193);
+            txtSpecies.Margin = new Padding(3, 4, 3, 4);
+            txtSpecies.Name = "txtSpecies";
+            txtSpecies.Size = new Size(302, 27);
+            txtSpecies.TabIndex = 2;
+            // 
+            // lblAge
+            // 
+            lblAge.AutoSize = true;
+            lblAge.Location = new Point(3, 234);
+            lblAge.Name = "lblAge";
+            lblAge.Size = new Size(84, 20);
+            lblAge.TabIndex = 3;
+            lblAge.Text = "Age (years)";
+            // 
+            // txtAge
+            // 
+            txtAge.AccessibleName = "Age";
+            txtAge.Dock = DockStyle.Fill;
+            txtAge.Location = new Point(3, 271);
+            txtAge.Margin = new Padding(3, 4, 3, 4);
+            txtAge.Name = "txtAge";
+            txtAge.PlaceholderText = "0 to 100";
+            txtAge.Size = new Size(302, 27);
+            txtAge.TabIndex = 3;
+            // 
+            // lblRecoveryScore
+            // 
+            lblRecoveryScore.AutoSize = true;
+            lblRecoveryScore.Location = new Point(3, 312);
+            lblRecoveryScore.Name = "lblRecoveryScore";
+            lblRecoveryScore.Size = new Size(110, 20);
+            lblRecoveryScore.TabIndex = 4;
+            lblRecoveryScore.Text = "Recovery Score";
+            // 
+            // txtRecoveryScore
+            // 
+            txtRecoveryScore.AccessibleName = "Recovery Score";
+            txtRecoveryScore.Dock = DockStyle.Fill;
+            txtRecoveryScore.Location = new Point(3, 349);
+            txtRecoveryScore.Margin = new Padding(3, 4, 3, 4);
+            txtRecoveryScore.Name = "txtRecoveryScore";
+            txtRecoveryScore.PlaceholderText = "0 to 100";
+            txtRecoveryScore.Size = new Size(302, 27);
+            txtRecoveryScore.TabIndex = 4;
+            // 
+            // lblHint
+            // 
+            lblHint.Dock = DockStyle.Fill;
+            lblHint.Location = new Point(3, 390);
+            lblHint.Name = "lblHint";
+            lblHint.Size = new Size(302, 53);
+            lblHint.TabIndex = 5;
+            lblHint.Text = "All fields are required. Status and housing are calculated automatically.";
+            // 
+            // btnAdd
+            // 
+            btnAdd.Dock = DockStyle.Fill;
+            btnAdd.Location = new Point(3, 447);
+            btnAdd.Margin = new Padding(3, 4, 3, 4);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(302, 59);
+            btnAdd.TabIndex = 5;
+            btnAdd.Text = "Add animal";
+            btnAdd.Click += btnAdd_Click;
+            // 
+            // lblClassification
+            // 
+            lblClassification.Dock = DockStyle.Fill;
+            lblClassification.Location = new Point(3, 510);
+            lblClassification.Name = "lblClassification";
+            lblClassification.Padding = new Padding(0, 16, 0, 0);
+            lblClassification.Size = new Size(302, 64);
+            lblClassification.TabIndex = 6;
+            lblClassification.Text = "No animal added yet.";
+            // 
+            // dgvAnimals
+            // 
             dgvAnimals.AccessibleName = "Animal records";
-            dgvAnimals.Dock = DockStyle.Fill;
-            dgvAnimals.ReadOnly = true;
-            dgvAnimals.AutoGenerateColumns = false;
             dgvAnimals.AllowUserToAddRows = false;
             dgvAnimals.AllowUserToDeleteRows = false;
-            dgvAnimals.AllowUserToOrderColumns = false;
-            dgvAnimals.MultiSelect = false;
-            dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAnimals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAnimals.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvAnimals.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            dgvAnimals.RowHeadersVisible = false;
             dgvAnimals.BackgroundColor = SystemColors.Window;
-            layout.Controls.Add(dgvAnimals, 1, 2);
-
-            lblLoadNotice.Name = "lblLoadNotice";
-            lblLoadNotice.Dock = DockStyle.Fill;
-            lblLoadNotice.Padding = new Padding(0, 10, 0, 0);
-            layout.Controls.Add(lblLoadNotice, 0, 3);
+            dgvAnimals.ColumnHeadersHeight = 29;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dgvAnimals.DefaultCellStyle = dataGridViewCellStyle5;
+            dgvAnimals.Dock = DockStyle.Fill;
+            dgvAnimals.Location = new Point(380, 137);
+            dgvAnimals.Margin = new Padding(3, 4, 3, 4);
+            dgvAnimals.MultiSelect = false;
+            dgvAnimals.Name = "dgvAnimals";
+            dgvAnimals.ReadOnly = true;
+            dgvAnimals.RowHeadersVisible = false;
+            dgvAnimals.RowHeadersWidth = 51;
+            dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvAnimals.Size = new Size(979, 618);
+            dgvAnimals.TabIndex = 3;
+            // 
+            // lblLoadNotice
+            // 
             layout.SetColumnSpan(lblLoadNotice, 2);
-            lblFeedback.Name = "lblFeedback";
-            lblFeedback.Text = "Enter the animal's details, then select Add animal.";
-            lblFeedback.Dock = DockStyle.Fill;
-            lblFeedback.Padding = new Padding(10);
+            lblLoadNotice.Dock = DockStyle.Fill;
+            lblLoadNotice.Location = new Point(26, 759);
+            lblLoadNotice.Name = "lblLoadNotice";
+            lblLoadNotice.Padding = new Padding(0, 13, 0, 0);
+            lblLoadNotice.Size = new Size(1333, 73);
+            lblLoadNotice.TabIndex = 4;
+            // 
+            // lblFeedback
+            // 
             lblFeedback.BackColor = SystemColors.ControlLight;
-            layout.Controls.Add(lblFeedback, 0, 4);
             layout.SetColumnSpan(lblFeedback, 2);
-
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1180, 740);
-            MinimumSize = new Size(1120, 730);
-            StartPosition = FormStartPosition.CenterScreen;
-            Name = "MainForm";
-            Text = "Baobab Ridge Wildlife Rehabilitation";
+            lblFeedback.Dock = DockStyle.Fill;
+            lblFeedback.Location = new Point(26, 832);
+            lblFeedback.Name = "lblFeedback";
+            lblFeedback.Padding = new Padding(11, 13, 11, 13);
+            lblFeedback.Size = new Size(1333, 77);
+            lblFeedback.TabIndex = 5;
+            lblFeedback.Text = "Enter the animal's details, then select Add animal.";
+            // 
+            // MainForm
+            // 
             AcceptButton = btnAdd;
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1385, 936);
             Controls.Add(layout);
+            Margin = new Padding(3, 4, 3, 4);
+            MinimumSize = new Size(1277, 958);
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Baobab Ridge Wildlife Rehabilitation";
             Load += MainForm_Load;
+            layout.ResumeLayout(false);
+            grpAdd.ResumeLayout(false);
+            inputLayout.ResumeLayout(false);
+            inputLayout.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvAnimals).EndInit();
             ResumeLayout(false);
         }
+        private TableLayoutPanel layout;
+        private Label lblTitle;
+        private Label lblSubtitle;
+        private GroupBox grpAdd;
+        private TableLayoutPanel inputLayout;
+        private Label lblAnimalId;
+        private Label lblName;
+        private Label lblSpecies;
+        private Label lblAge;
+        private Label lblRecoveryScore;
+        private Label lblHint;
     }
 }
