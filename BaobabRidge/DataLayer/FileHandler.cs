@@ -59,6 +59,12 @@ namespace BaobabRidge.DataLayer
             {
                 message = "Cannot read animals.txt. Close any program locking the file and try again.";
             }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                // Unusual path or security-policy problems: still show a friendly message, never a crash.
+                message = "animals.txt could not be opened because its location is not valid or not allowed.";
+            }
             animals.Clear();
             return false;
         }
@@ -146,33 +152,54 @@ namespace BaobabRidge.DataLayer
             }
             return false;
         }
-        // Member3 Precision file rewriting: updates only the targeted animal record without duplication or data loss.
+        // Updates one valid matching record; a temporary file protects the original if writing fails.
         public bool TryUpdateAnimal(Animal animal, out string message)
         {
             message = string.Empty;
+            string? temporaryPath = null;
             try
             {
                 string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
-                bool updated = false;
+                int targetIndex = -1;
 
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    string[] parts = lines[i].Split('|');
-                    if (parts.Length >= 7 && string.Equals(parts[0].Trim(), animal.Id, StringComparison.OrdinalIgnoreCase))
+                    // Use the same parser as View so a skipped malformed line cannot be edited by mistake.
+                    if (TryParseAnimal(lines[i], out Animal? storedAnimal)
+                        && string.Equals(storedAnimal!.Id, animal.Id, StringComparison.OrdinalIgnoreCase))
                     {
-                        lines[i] = ToFileLine(animal);
-                        updated = true;
-                        break;
+                        if (targetIndex >= 0)
+                        {
+                            message = "More than one valid record has this Animal ID. Correct the duplicate IDs before updating.";
+                            return false;
+                        }
+                        targetIndex = i;
                     }
                 }
 
-                if (!updated)
+                if (targetIndex < 0)
                 {
                     message = "Animal ID not found in file.";
                     return false;
                 }
 
-                File.WriteAllLines(filePath, lines, new UTF8Encoding(false));
+                lines[targetIndex] = ToFileLine(animal);
+                // Keep the temporary file beside the original so replacement stays on the same drive.
+                temporaryPath = filePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+                using (FileStream stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
+                    {
+                        foreach (string line in lines)
+                        {
+                            writer.WriteLine(line);
+                        }
+                    }
+                    stream.Flush(true);
+                }
+                // Replace only after the complete new file has been written successfully.
+                File.Replace(temporaryPath, filePath, null);
+                temporaryPath = null;
                 return true;
             }
             catch (UnauthorizedAccessException)
@@ -186,6 +213,26 @@ namespace BaobabRidge.DataLayer
             catch (IOException)
             {
                 message = "Cannot update animals.txt. Close any program locking the file.";
+            }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                message = "animals.txt could not be updated because its location is not valid or not allowed.";
+            }
+            finally
+            {
+                if (temporaryPath != null)
+                {
+                    try
+                    {
+                        File.Delete(temporaryPath);
+                    }
+                    catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException
+                        || ex is System.Security.SecurityException)
+                    {
+                        // Cleanup failure must not hide the original file-operation result.
+                    }
+                }
             }
             return false;
         }

@@ -4,10 +4,10 @@ using BaobabRidge.BusinessLogicLayer;
 using BaobabRidge.DataLayer;
 using BaobabRidge.PresentationLayer;
 
-internal static class Program
+internal static partial class Program
 {
     private static int checks;
-    private static readonly string testFolder = Path.Combine(Path.GetTempPath(), "BaobabRidgeChecks-" + Guid.NewGuid());
+    private static readonly string testFolder = Path.Combine(AppContext.BaseDirectory, "BaobabRidgeChecks-" + Guid.NewGuid());
 
     // Runs repeatable checks in temporary files and returns a failing exit code on any mismatch.
     [STAThread]
@@ -20,6 +20,8 @@ internal static class Program
             CheckValidation();
             CheckFiles();
             CheckForm(args.Length > 0 ? args[0] : null);
+            CheckUpdateFiles();
+            CheckUpdateForm(args.Length > 0 ? args[0] : null);
             Console.WriteLine("PASS: " + checks + " checks.");
             return 0;
         }

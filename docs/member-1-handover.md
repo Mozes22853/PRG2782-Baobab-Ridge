@@ -43,17 +43,15 @@ Unlike demonstration paths, the application's path is calculated from `AppContex
 
 ### Member 2
 
-The Add form currently includes a minimal working View foundation because Feature 1 explicitly requires a grid refresh. Extend/review `RefreshAnimals` and `TryLoadAnimals` on your own feature branch. The loader returns a fresh `List<Animal>`, a skipped-line count, and a friendly error string. It validates input fields and exact classification strings. Rows stay in file order. Avoid duplicating the form or creating another independent data list that goes stale.
-
-Replace the empty source `animals.txt` with at least eight valid records across at least four statuses. The project already sets Copy if newer. Review file-error coverage with all other members as their operations are added.
+Member 2's View work is integrated: `RefreshAnimals` and `TryLoadAnimals` load a fresh list, retain file order, enforce the seven grid headers, show skipped-line notices, and handle file errors. The source `animals.txt` now contains 12 valid records across all five statuses with Copy if newer. Keep this configuration when integrating later features.
 
 ### Member 3
 
 Call `AnimalValidator.TryCreateAnimal` with the original locked ID and edited input values. If it succeeds, call `AnimalClassifier.Classify` on the returned animal every time, even if the score is unchanged. Then perform your targeted rewrite. Do not use `TryAppendAnimal` for Update, because it rejects existing IDs and appends records.
 
-The same classification method is available to Update, but Update itself is not implemented. Its future call cannot be demonstrated in an Update UI yet; the checks program verifies recalculation on a 79-to-80 change.
+Member 3's Update work is integrated with the simple editable form. `LoadAnimalForEditing` is shared by exact-ID search and row selection; `SetEditMode` locks the ID, switches Add/Save availability and restores empty Add inputs after Save or Clear. The separate search box remains usable during editing. `TryUpdateAnimal` uses the View parser to find one valid record, refuses ambiguous valid IDs, writes a complete temporary file and replaces the original after the write succeeds. Other line contents are retained; line endings are written using Windows defaults. This protects against incomplete writes but does not provide concurrent editing or stale-record conflict detection across separate application instances.
 
-Add the exact-ID search, row selection editing, Save Changes, Clear, Add/Edit states, and safe rewrite on your own branch. The existing `ClearInputs` is only Add cleanup, not the complete edit-mode reset you will need.
+The checks now exercise real Search, Save Changes, Clear and grid-click events, failed-save input retention, and the 79-to-80 boundary. They also cover a malformed line sharing a valid record's ID, duplicate valid IDs, missing targets, permissions and locks.
 
 ### Member 4
 
@@ -72,6 +70,14 @@ The first scaffold built successfully before it was committed. The member implem
 
 A WinForms bitmap preview was visually inspected. Visual Studio's interactive designer and multiple Windows display-scaling settings were not tested. A process crash or disk failure during a write was not simulated.
 
+## Editing the form in Visual Studio
+
+Open `PRG2782-Baobab-Ridge.sln`, right-click `PresentationLayer/MainForm.cs`, and select **View Designer** (Shift+F7). The controls are placed directly on the form with ordinary `Location` and `Size` properties. There are no layout panels or docked controls. Select a control to drag it, resize it with its handles, or edit these properties in the Properties window. If the designer has **Lock Controls** enabled, turn it off before moving controls.
+
+Drag new buttons from the Toolbox into the unused area below the grid. Use the Properties window to set each control's `(Name)` and `Text`; use the Events tab to connect an existing click handler. Preserve `txtAnimalId`, `txtName`, `txtSpecies`, `txtAge`, `txtRecoveryScore`, `btnAdd`, `dgvAnimals`, and the feedback label names so the existing code can continue using them. Grid column order and read-only settings must remain intact.
+
+Members working on an earlier branch must merge the updated `main` into their branch. If a designer-file conflict occurs, retain this simple layout and reapply their own additional controls and event hookups, preserving their feature code. Do not replace another member's form event handlers with an older copy.
+
 ## Suggested Member 1 demonstration
 
 Prepare a disposable copy of the data file for practice so real records are not lost. Explain these steps in your own words rather than reading a script:
@@ -87,7 +93,7 @@ Every member needs at least three meaningful presentation minutes. The whole pre
 
 ## Submission requirements still outstanding
 
-- Update, Delete, Summary, full team integration, and starter records.
+- Delete, Summary, and final integration of all five features. Add, View, Update and starter records are integrated.
 - Member names/student numbers and lecturer access to the private repository.
 - At least 15 meaningful commits across the group, each member's own contribution, and activity on at least three different days. Today's commits count as one day only.
 - At least one merged pull request per member and one feature branch for each of the five features.
