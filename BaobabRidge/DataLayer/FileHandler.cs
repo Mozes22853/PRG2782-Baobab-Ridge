@@ -237,6 +237,121 @@ namespace BaobabRidge.DataLayer
             return false;
         }
 
+        // Removes precisely one selected valid record, preserving every other line's original bytes.
+        public bool TryDeleteAnimal(Animal selectedAnimal, out string message)
+        {
+            message = string.Empty;
+            string? temporaryPath = null;
+            try
+            {
+                byte[] original = File.ReadAllBytes(filePath);
+                int deleteStart = -1;
+                int deleteEnd = -1;
+                int matchingRecords = 0;
+
+                // Find record boundaries in raw UTF-8 so unrelated lines retain their exact content
+                // and original CR, LF or CRLF endings even after one animal is removed.
+                for (int start = 0; start < original.Length; )
+                {
+                    int lineEnd = start;
+                    while (lineEnd < original.Length && original[lineEnd] != (byte)'\r'
+                        && original[lineEnd] != (byte)'\n')
+                    {
+                        lineEnd++;
+                    }
+
+                    int nextStart = lineEnd;
+                    if (nextStart < original.Length && original[nextStart] == (byte)'\r')
+                    {
+                        nextStart++;
+                    }
+                    if (nextStart < original.Length && original[nextStart] == (byte)'\n')
+                    {
+                        nextStart++;
+                    }
+
+                    string line = Encoding.UTF8.GetString(original, start, lineEnd - start);
+                    if (start == 0 && line.StartsWith("\uFEFF", StringComparison.Ordinal))
+                    {
+                        line = line.Substring(1);
+                    }
+                    if (TryParseAnimal(line, out Animal? storedAnimal)
+                        && string.Equals(storedAnimal!.Id, selectedAnimal.Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        matchingRecords++;
+                        // Refuse to delete a stale row that has changed since it was displayed.
+                        if (ToFileLine(storedAnimal) != ToFileLine(selectedAnimal))
+                        {
+                            message = "This animal has changed on disk. Reload the records before deleting.";
+                            return false;
+                        }
+                        deleteStart = start;
+                        deleteEnd = nextStart;
+                    }
+                    start = nextStart;
+                }
+
+                if (matchingRecords == 0)
+                {
+                    message = "Animal ID not found in animals.txt. Reload the records before deleting.";
+                    return false;
+                }
+                if (matchingRecords > 1)
+                {
+                    message = "More than one valid animal has this ID. Correct duplicate IDs before deleting.";
+                    return false;
+                }
+
+                byte[] updated = new byte[original.Length - (deleteEnd - deleteStart)];
+                Buffer.BlockCopy(original, 0, updated, 0, deleteStart);
+                Buffer.BlockCopy(original, deleteEnd, updated, deleteStart, original.Length - deleteEnd);
+                temporaryPath = filePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+                using (FileStream stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    stream.Write(updated, 0, updated.Length);
+                    stream.Flush(true);
+                }
+                // Replace only after the complete new file is ready; errors leave the original intact.
+                File.Replace(temporaryPath, filePath, null);
+                temporaryPath = null;
+                return true;
+            }
+            catch (FileNotFoundException)
+            {
+                message = "animals.txt was not found. Reload the records before deleting.";
+            }
+            catch (DirectoryNotFoundException)
+            {
+                message = "The folder for animals.txt could not be found.";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                message = "Cannot delete this animal. Check permissions or the read-only setting on animals.txt.";
+            }
+            catch (IOException)
+            {
+                message = "Cannot delete this animal. Close any program locking animals.txt and try again.";
+            }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                message = "Cannot delete this animal because the file location is invalid or restricted.";
+            }
+            finally
+            {
+                if (temporaryPath != null)
+                {
+                    try { File.Delete(temporaryPath); }
+                    catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException
+                        || ex is System.Security.SecurityException)
+                    {
+                        // The original failure is more important than temporary-file cleanup.
+                    }
+                }
+            }
+            return false;
+        }
+
         // Serializes exactly the seven required fields, with no header or extra spaces.
         public static string ToFileLine(Animal animal)
         {
