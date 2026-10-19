@@ -59,6 +59,12 @@ namespace BaobabRidge.DataLayer
             {
                 message = "Cannot read animals.txt. Close any program locking the file and try again.";
             }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                // Unusual path or security-policy problems: still show a friendly message, never a crash.
+                message = "animals.txt could not be opened because its location is not valid or not allowed.";
+            }
             animals.Clear();
             return false;
         }
