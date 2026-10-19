@@ -6,10 +6,11 @@ PRG2782 Project 2026: C# Windows Forms with plain text file storage.
 
 Requires Windows and Visual Studio with the .NET desktop development workload, or a .NET SDK capable of targeting .NET 8. The application targets `net8.0-windows` and uses no third-party storage packages.
 
-1. Clone this repository and use the `main` branch, which includes Member 1's merged work.
+1. Clone this repository and use the `main` branch for the integrated team work.
 2. In Visual Studio, choose **File > Open > Project/Solution** and open `PRG2782-Baobab-Ridge.sln`. This solution contains the app only; the separate `Member1Checks` program is for verification.
 3. Allow NuGet restore to finish. The run target should be **BaobabRidge**, not **Current Document (Program.cs)**. Press **F5** to run. If needed, right-click the BaobabRidge project and choose **Set as Startup Project**. Alternatively, run `dotnet run --project BaobabRidge/BaobabRidge.csproj` from the repository folder.
-4. Enter an ID such as `WR-0007`, a name, species, age, and recovery score, then select **Add animal**.
+4. Enter an unused ID such as `WR-0013`, a name, species, age, and recovery score, then select **Add animal**. The starter data already uses IDs WR-0001 through WR-0012.
+5. To update, click a grid row or enter an exact ID in **Search by ID** and click **Search**. Edit the details and select **Save Changes**. **Clear** returns to Add mode. The ID stays read-only while editing.
 
 The `.exe`, `animals.txt`, and supporting runtime files are in the build output folder, for example `BaobabRidge/bin/Debug/net8.0-windows/`. Runtime changes affect the output copy of the file. Avoid deleting that folder if it contains records you need. The source `animals.txt` uses **Copy if newer** (`PreserveNewest`).
 
@@ -38,8 +39,9 @@ The first commit contains only the blank Windows Forms project, `.gitignore`, an
 ## Feature status
 
 - **Member 1 implemented:** animal model, one classification method, shared input validation, Add, duplicate checking, UTF-8 append, field-specific feedback/focus, displayed classification, cleared inputs, and grid refresh.
-- **View integration included for Add:** initial loading, exact read-only grid columns, file order, missing-file creation, and one skipped-line count. Member 2 can extend and validate this foundation on their branch.
-- **Pending other members:** Update, Delete, Summary Report, and at least eight starter animals covering four statuses. The committed `animals.txt` is intentionally empty at this stage.
+- **Member 2 integrated:** startup loading, exact read-only grid columns in file order, missing-file creation, friendly file errors, skipped-line notification, and 12 starter animals across all five statuses.
+- **Member 3 integrated:** exact case-insensitive ID search, row selection, shared validation and classification on Save Changes, immutable ID, Add/Edit button states, Clear, and automatic grid refresh. Update matches only valid file records and refuses ambiguous valid IDs. It writes a temporary file beside the original and replaces the original only after writing succeeds.
+- **Pending Member 4:** Delete and Summary Report.
 
 ## File formats
 
@@ -49,7 +51,7 @@ The first commit contains only the blank Windows Forms project, `.gitignore`, an
 
 ## Checks and handover
 
-Run `dotnet run --project Member1Checks/Member1Checks.csproj --configuration Release` on Windows. This package-free console checks program exercises validation, all band endpoints, append preservation, duplicate detection, malformed records, read-only/locked files, and the actual form's Add event. The form opens briefly during UI checks. File fixtures use temporary paths or the checks project's output copy and are restored afterward.
+Run `dotnet run --project Member1Checks/Member1Checks.csproj --configuration Release` on Windows. This package-free checks program exercises validation, classification endpoints, append preservation, duplicate detection, malformed records, read-only/locked files, and the form's Add, Search, row-selection, Save Changes and Clear events. It also checks the malformed-ID update regression, ambiguous IDs, button states and visible control positions. The form opens briefly during UI checks. File fixtures use temporary paths or the checks project's output copy and are restored afterward.
 
 See [Member 1 handover](docs/member-1-handover.md) for requirements, shared-method use, manual demonstration steps, and work still needed for submission. Lecture concepts are recorded there; supplied lecture files are not uploaded to this repository.
 

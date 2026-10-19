@@ -152,6 +152,90 @@ namespace BaobabRidge.DataLayer
             }
             return false;
         }
+        // Updates one valid matching record; a temporary file protects the original if writing fails.
+        public bool TryUpdateAnimal(Animal animal, out string message)
+        {
+            message = string.Empty;
+            string? temporaryPath = null;
+            try
+            {
+                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                int targetIndex = -1;
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    // Use the same parser as View so a skipped malformed line cannot be edited by mistake.
+                    if (TryParseAnimal(lines[i], out Animal? storedAnimal)
+                        && string.Equals(storedAnimal!.Id, animal.Id, StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (targetIndex >= 0)
+                        {
+                            message = "More than one valid record has this Animal ID. Correct the duplicate IDs before updating.";
+                            return false;
+                        }
+                        targetIndex = i;
+                    }
+                }
+
+                if (targetIndex < 0)
+                {
+                    message = "Animal ID not found in file.";
+                    return false;
+                }
+
+                lines[targetIndex] = ToFileLine(animal);
+                // Keep the temporary file beside the original so replacement stays on the same drive.
+                temporaryPath = filePath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+                using (FileStream stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
+                    {
+                        foreach (string line in lines)
+                        {
+                            writer.WriteLine(line);
+                        }
+                    }
+                    stream.Flush(true);
+                }
+                // Replace only after the complete new file has been written successfully.
+                File.Replace(temporaryPath, filePath, null);
+                temporaryPath = null;
+                return true;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                message = "Cannot modify animals.txt. Check permissions.";
+            }
+            catch (DirectoryNotFoundException)
+            {
+                message = "The folder for animals.txt could not be found.";
+            }
+            catch (IOException)
+            {
+                message = "Cannot update animals.txt. Close any program locking the file.";
+            }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                message = "animals.txt could not be updated because its location is not valid or not allowed.";
+            }
+            finally
+            {
+                if (temporaryPath != null)
+                {
+                    try
+                    {
+                        File.Delete(temporaryPath);
+                    }
+                    catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException
+                        || ex is System.Security.SecurityException)
+                    {
+                        // Cleanup failure must not hide the original file-operation result.
+                    }
+                }
+            }
+            return false;
+        }
 
         // Serializes exactly the seven required fields, with no header or extra spaces.
         public static string ToFileLine(Animal animal)

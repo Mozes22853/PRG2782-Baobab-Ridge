@@ -6,6 +6,7 @@ namespace BaobabRidge.PresentationLayer
     public partial class MainForm : Form
     {
         private readonly FileHandler fileHandler;
+        private string? currentEditingId;
 
         // Creates the form and the handler for the file beside the executable.
         public MainForm()
@@ -13,6 +14,7 @@ namespace BaobabRidge.PresentationLayer
             InitializeComponent();
             fileHandler = new FileHandler();
             ConfigureGrid();
+            SetEditMode(false);
         }
 
         // Defines the seven grid columns explicitly so headers and order match the brief
@@ -92,6 +94,112 @@ namespace BaobabRidge.PresentationLayer
                 + "Housing Unit: " + animal.HousingUnit;
             ShowFeedback("Animal added successfully. Ready for the next animal.", false);
             RefreshAnimals();
+        }
+
+        // Loads a selected animal into the same input boxes used by Add.
+        private void dgvAnimals_CellClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < dgvAnimals.Rows.Count
+                && dgvAnimals.Rows[e.RowIndex].DataBoundItem is Animal animal)
+            {
+                LoadAnimalForEditing(animal);
+            }
+        }
+
+        // Searches the current file using an exact, case-insensitive ID match.
+        private void btnSearch_Click(object? sender, EventArgs e)
+        {
+            string searchId = txtSearchId.Text.Trim();
+            if (searchId.Length == 0)
+            {
+                ShowFeedback("Enter an Animal ID in the search box.", true);
+                txtSearchId.Focus();
+                return;
+            }
+            if (!fileHandler.TryLoadAnimals(out List<Animal> animals, out _, out string message))
+            {
+                ShowFeedback(message, true);
+                return;
+            }
+            foreach (Animal animal in animals)
+            {
+                if (string.Equals(animal.Id, searchId, StringComparison.OrdinalIgnoreCase))
+                {
+                    LoadAnimalForEditing(animal);
+                    return;
+                }
+            }
+            ShowFeedback("Animal ID '" + searchId + "' was not found.", true);
+        }
+
+        // Gives row selection and ID searching the same edit-mode behaviour.
+        private void LoadAnimalForEditing(Animal animal)
+        {
+            currentEditingId = animal.Id;
+            txtAnimalId.Text = animal.Id;
+            txtName.Text = animal.Name;
+            txtSpecies.Text = animal.Species;
+            txtAge.Text = animal.Age.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            txtRecoveryScore.Text = animal.RecoveryScore.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            SetEditMode(true);
+            ShowFeedback("Animal loaded for editing. Change the details and select Save Changes.", false);
+            txtName.Focus();
+        }
+
+        // Keeps the immutable ID and action buttons consistent with the current form mode.
+        private void SetEditMode(bool isEditing)
+        {
+            txtAnimalId.ReadOnly = isEditing;
+            btnAdd.Enabled = !isEditing;
+            btnSaveChanges.Enabled = isEditing;
+            lblMode.Text = isEditing ? "Edit mode: " + currentEditingId : "Add mode";
+            AcceptButton = isEditing ? btnSaveChanges : btnAdd;
+            if (!isEditing)
+            {
+                currentEditingId = null;
+                ClearInputs();
+            }
+        }
+
+        // Validates and reclassifies the loaded animal before updating its single file record.
+        private void btnSaveChanges_Click(object? sender, EventArgs e)
+        {
+            if (currentEditingId == null)
+            {
+                ShowFeedback("No animal is currently loaded for updating.", true);
+                return;
+            }
+            if (!AnimalValidator.TryCreateAnimal(currentEditingId, txtName.Text, txtSpecies.Text,
+                txtAge.Text, txtRecoveryScore.Text, out Animal? updatedAnimal,
+                out string invalidField, out string message))
+            {
+                ShowFeedback(message, true);
+                FocusInvalidField(invalidField);
+                return;
+            }
+            AnimalClassifier.Classify(updatedAnimal!);
+            if (!fileHandler.TryUpdateAnimal(updatedAnimal!, out message))
+            {
+                ShowFeedback(message, true);
+                return;
+            }
+            SetEditMode(false);
+            lblClassification.Text = "Updated " + updatedAnimal!.Id + Environment.NewLine
+                + "Status: " + updatedAnimal.Status + Environment.NewLine
+                + "Housing Unit: " + updatedAnimal.HousingUnit;
+            ShowFeedback("Animal updated successfully. Ready for the next animal.", false);
+            RefreshAnimals();
+        }
+
+        // Leaves edit mode and clears the form for a new animal.
+        private void btnClear_Click(object? sender, EventArgs e)
+        {
+            SetEditMode(false);
+            txtSearchId.Clear();
+            dgvAnimals.ClearSelection();
+            dgvAnimals.CurrentCell = null;
+            lblClassification.Text = "No animal selected.";
+            ShowFeedback("Cleared form. Returned to Add mode.", false);
         }
 
         // Reloads animals.txt into the grid, replacing (never adding to) the previous rows.
