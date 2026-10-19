@@ -52,7 +52,12 @@ namespace BaobabRidge.PresentationLayer
             ShowFeedback("Animal added successfully. Ready for the next animal.", false);
             RefreshAnimals();
         }
-        //Member3 Tracks the ID currently being edited in Edit Mode
+
+       
+        //member3code
+       
+
+        // Tracks the ID currently being edited in Edit Mode
         private string? currentEditingId = null;
 
         // Feature 3.1: Load record for editing when clicking a row in the grid
@@ -162,7 +167,7 @@ namespace BaobabRidge.PresentationLayer
             RefreshAnimals();
         }
 
-        // Clear button leaves edit mode and returns form to Add mode[cite: 4] end of Member3
+        // Clear button leaves edit mode and returns form to Add mode[cite: 4]
         private void btnClear_Click(object? sender, EventArgs e)
         {
             SetEditMode(false);
@@ -221,6 +226,11 @@ namespace BaobabRidge.PresentationLayer
             }
             input.Focus();
             input.SelectAll();
+        }
+
+        private void lblClassification_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

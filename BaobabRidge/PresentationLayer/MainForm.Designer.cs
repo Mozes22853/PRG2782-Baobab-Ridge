@@ -16,11 +16,14 @@ namespace BaobabRidge.PresentationLayer
         // Creates standard WinForms controls and connects the Add and Load events.
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             layout = new TableLayoutPanel();
             lblTitle = new Label();
             lblSubtitle = new Label();
             grpAdd = new GroupBox();
+            btnSaveChanges = new Button();
+            btnClear = new Button();
+            btnSearch = new Button();
             inputLayout = new TableLayoutPanel();
             lblAnimalId = new Label();
             txtAnimalId = new TextBox();
@@ -92,6 +95,9 @@ namespace BaobabRidge.PresentationLayer
             // 
             // grpAdd
             // 
+            grpAdd.Controls.Add(btnSaveChanges);
+            grpAdd.Controls.Add(btnClear);
+            grpAdd.Controls.Add(btnSearch);
             grpAdd.Controls.Add(inputLayout);
             grpAdd.Dock = DockStyle.Fill;
             grpAdd.Location = new Point(23, 133);
@@ -102,6 +108,35 @@ namespace BaobabRidge.PresentationLayer
             grpAdd.TabIndex = 2;
             grpAdd.TabStop = false;
             grpAdd.Text = "Add an animal";
+            // 
+            // btnSaveChanges
+            // 
+            btnSaveChanges.Location = new Point(217, 589);
+            btnSaveChanges.Name = "btnSaveChanges";
+            btnSaveChanges.Size = new Size(102, 33);
+            btnSaveChanges.TabIndex = 3;
+            btnSaveChanges.Text = "SaveChanges";
+            btnSaveChanges.UseVisualStyleBackColor = true;
+            // 
+            // btnClear
+            // 
+            btnClear.Location = new Point(117, 589);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(94, 33);
+            btnClear.TabIndex = 2;
+            btnClear.Text = "Clear";
+            btnClear.TextAlign = ContentAlignment.TopCenter;
+            btnClear.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(17, 589);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(94, 33);
+            btnSearch.TabIndex = 1;
+            btnSearch.Text = "Search";
+            btnSearch.TextAlign = ContentAlignment.TopCenter;
+            btnSearch.UseVisualStyleBackColor = true;
             // 
             // inputLayout
             // 
@@ -268,6 +303,7 @@ namespace BaobabRidge.PresentationLayer
             lblClassification.Size = new Size(302, 64);
             lblClassification.TabIndex = 6;
             lblClassification.Text = "No animal added yet.";
+            lblClassification.Click += lblClassification_Click;
             // 
             // dgvAnimals
             // 
@@ -278,14 +314,14 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvAnimals.BackgroundColor = SystemColors.Window;
             dgvAnimals.ColumnHeadersHeight = 29;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dgvAnimals.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dgvAnimals.DefaultCellStyle = dataGridViewCellStyle1;
             dgvAnimals.Dock = DockStyle.Fill;
             dgvAnimals.Location = new Point(380, 137);
             dgvAnimals.Margin = new Padding(3, 4, 3, 4);
@@ -297,6 +333,7 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvAnimals.Size = new Size(979, 618);
             dgvAnimals.TabIndex = 3;
+            dgvAnimals.CellClick += dgvAnimals_CellClick;
             // 
             // lblLoadNotice
             // 
@@ -351,5 +388,8 @@ namespace BaobabRidge.PresentationLayer
         private Label lblAge;
         private Label lblRecoveryScore;
         private Label lblHint;
+        private Button btnSaveChanges;
+        private Button btnClear;
+        private Button btnSearch;
     }
 }
