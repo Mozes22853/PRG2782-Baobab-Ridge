@@ -117,6 +117,7 @@ namespace BaobabRidge.PresentationLayer
             btnSaveChanges.TabIndex = 3;
             btnSaveChanges.Text = "SaveChanges";
             btnSaveChanges.UseVisualStyleBackColor = true;
+            btnSaveChanges.Click += btnSaveChanges_Click;
             // 
             // btnClear
             // 
@@ -127,6 +128,7 @@ namespace BaobabRidge.PresentationLayer
             btnClear.Text = "Clear";
             btnClear.TextAlign = ContentAlignment.TopCenter;
             btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // btnSearch
             // 
@@ -137,6 +139,7 @@ namespace BaobabRidge.PresentationLayer
             btnSearch.Text = "Search";
             btnSearch.TextAlign = ContentAlignment.TopCenter;
             btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
             // inputLayout
             // 
