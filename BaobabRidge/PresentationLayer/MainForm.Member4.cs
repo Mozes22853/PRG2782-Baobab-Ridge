@@ -2,31 +2,28 @@ using BaobabRidge.BusinessLogicLayer;
 
 namespace BaobabRidge.PresentationLayer
 {
-    // Member 4's Delete feature is separate from the existing Add/View/Update handlers.
+    // Member 4's Delete handler shares the controls declared in MainForm.Designer.cs.
     public partial class MainForm
     {
-        private Button btnDelete = null!;
-
-        // Shortens the grid and places the Delete action alongside the existing search controls.
-        private void InitializeMember4Controls()
+        // Reads current file data, displays the statistics and overwrites the required report.
+        private void btnGenerateSummary_Click(object? sender, EventArgs e)
         {
-            dgvAnimals.Height = 438;
-            lblSearchId.Top = 575;
-            txtSearchId.Top = 572;
-            btnSearch.Top = 568;
-
-            btnDelete = new Button
+            if (!fileHandler.TryLoadAnimals(out List<Animal> animals, out int skipped, out string message))
             {
-                Name = "btnDelete",
-                Text = "Delete selected",
-                Location = new Point(750, 568),
-                Size = new Size(135, 34),
-                TabIndex = 10,
-                UseVisualStyleBackColor = true
-            };
-            btnDelete.Click += btnDelete_Click;
-            Controls.Add(btnDelete);
-            btnDelete.BringToFront();
+                txtSummary.Clear();
+                ShowFeedback("Summary could not be generated. " + message, true);
+                return;
+            }
+            AnimalSummary summary = new AnimalSummary(animals);
+            string report = summary.BuildReport(DateTime.Now);
+            txtSummary.Text = report;
+            string skippedNotice = skipped > 0 ? " Skipped " + skipped + " malformed line(s)." : string.Empty;
+            if (!fileHandler.TryWriteSummary(report, out message))
+            {
+                ShowFeedback("Summary is displayed but was not saved. " + message + skippedNotice, true);
+                return;
+            }
+            ShowFeedback("Summary generated and saved to summary.txt beside the application." + skippedNotice, false);
         }
 
         // Validates the grid selection, asks permission and deletes one valid matching record.

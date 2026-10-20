@@ -352,6 +352,66 @@ namespace BaobabRidge.DataLayer
             return false;
         }
 
+        // Overwrites summary.txt beside animals.txt only after a complete UTF-8 report is ready.
+        public bool TryWriteSummary(string report, out string message)
+        {
+            message = string.Empty;
+            string? temporaryPath = null;
+            try
+            {
+                string summaryPath = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(filePath))!, "summary.txt");
+                temporaryPath = summaryPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+                using (FileStream stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(stream, new UTF8Encoding(false), 1024, true))
+                    {
+                        writer.Write(report);
+                    }
+                    stream.Flush(true);
+                }
+                if (File.Exists(summaryPath))
+                {
+                    File.Replace(temporaryPath, summaryPath, null);
+                }
+                else
+                {
+                    File.Move(temporaryPath, summaryPath);
+                }
+                temporaryPath = null;
+                return true;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                message = "The folder for summary.txt could not be found. Restore the application folder and try again.";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                message = "Cannot save summary.txt. Remove the read-only setting or check file and folder permissions.";
+            }
+            catch (IOException)
+            {
+                message = "Cannot save summary.txt. Close any program locking it and check that the disk has free space.";
+            }
+            catch (Exception ex) when (ex is NotSupportedException || ex is ArgumentException
+                || ex is System.Security.SecurityException)
+            {
+                message = "summary.txt could not be saved because its location is invalid or restricted.";
+            }
+            finally
+            {
+                if (temporaryPath != null)
+                {
+                    try { File.Delete(temporaryPath); }
+                    catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException
+                        || ex is System.Security.SecurityException)
+                    {
+                        // Cleanup must not hide the friendly error for the failed report write.
+                    }
+                }
+            }
+            return false;
+        }
+
         // Serializes exactly the seven required fields, with no header or extra spaces.
         public static string ToFileLine(Animal animal)
         {

@@ -14,7 +14,6 @@ namespace BaobabRidge.PresentationLayer
             InitializeComponent();
             fileHandler = new FileHandler();
             ConfigureGrid();
-            InitializeMember4Controls();
             SetEditMode(false);
         }
 
@@ -204,8 +203,8 @@ namespace BaobabRidge.PresentationLayer
         }
 
         // Reloads animals.txt into the grid, replacing (never adding to) the previous rows.
-        // When announceProblems is true (application start) the user is told once about skipped lines
-        // or a file error; later refreshes only update the status label so no repeated pop-ups appear.
+        // When announceProblems is true (application start) the user is told once about skipped lines.
+        // File errors always show a dialog, including when a refresh follows a saved change.
         private void RefreshAnimals(bool announceProblems = false)
         {
             if (!fileHandler.TryLoadAnimals(out List<Animal> animals, out int skippedLines, out string message))
@@ -215,9 +214,10 @@ namespace BaobabRidge.PresentationLayer
                 {
                     // Show an empty grid rather than leaving a half-initialised one on screen.
                     dgvAnimals.DataSource = new List<Animal>();
-                    MessageBox.Show(message, "Baobab Ridge - file problem",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
+                // Always tell the user, so a failed refresh after Add, Update or Delete is not missed.
+                MessageBox.Show(message, "Baobab Ridge - file problem",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

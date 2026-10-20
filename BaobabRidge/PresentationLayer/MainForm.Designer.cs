@@ -42,6 +42,9 @@ namespace BaobabRidge.PresentationLayer
             btnSearch = new Button();
             btnSaveChanges = new Button();
             btnClear = new Button();
+            btnDelete = new Button();
+            btnGenerateSummary = new Button();
+            txtSummary = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
             SuspendLayout();
             //
@@ -178,10 +181,10 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.AllowUserToDeleteRows = false;
             dgvAnimals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAnimals.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvAnimals.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAnimals.BackgroundColor = SystemColors.Window;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -251,9 +254,19 @@ namespace BaobabRidge.PresentationLayer
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
             //
+            // btnDelete
+            //
+            btnDelete.Location = new Point(750, 568);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(135, 34);
+            btnDelete.TabIndex = 10;
+            btnDelete.Text = "Delete selected";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            //
             // lblLoadNotice
             //
-            lblLoadNotice.Location = new Point(24, 650);
+            lblLoadNotice.Location = new Point(24, 930);
             lblLoadNotice.Name = "lblLoadNotice";
             lblLoadNotice.Size = new Size(1132, 25);
             lblLoadNotice.TabIndex = 26;
@@ -261,19 +274,45 @@ namespace BaobabRidge.PresentationLayer
             // lblFeedback
             //
             lblFeedback.BackColor = SystemColors.ControlLight;
-            lblFeedback.Location = new Point(24, 687);
+            lblFeedback.Location = new Point(24, 967);
             lblFeedback.Name = "lblFeedback";
             lblFeedback.Padding = new Padding(8);
             lblFeedback.Size = new Size(1132, 43);
             lblFeedback.TabIndex = 27;
             lblFeedback.Text = "Enter the animal's details, then select Add animal.";
             //
+            // btnGenerateSummary
+            //
+            btnGenerateSummary.Location = new Point(330, 620);
+            btnGenerateSummary.Name = "btnGenerateSummary";
+            btnGenerateSummary.Size = new Size(175, 34);
+            btnGenerateSummary.TabIndex = 11;
+            btnGenerateSummary.Text = "Generate Summary";
+            btnGenerateSummary.UseVisualStyleBackColor = true;
+            btnGenerateSummary.Click += btnGenerateSummary_Click;
+            //
+            // txtSummary
+            //
+            txtSummary.AccessibleName = "Animal summary report";
+            txtSummary.Location = new Point(330, 665);
+            txtSummary.Name = "txtSummary";
+            txtSummary.Size = new Size(826, 250);
+            txtSummary.Multiline = true;
+            txtSummary.ReadOnly = true;
+            txtSummary.ScrollBars = ScrollBars.Both;
+            txtSummary.WordWrap = false;
+            txtSummary.TabIndex = 12;
+            //
             // MainForm
             //
             AcceptButton = btnAdd;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1180, 750);
+            AutoScroll = true;
+            ClientSize = new Size(1180, 1040);
+            Controls.Add(txtSummary);
+            Controls.Add(btnGenerateSummary);
+            Controls.Add(btnDelete);
             Controls.Add(btnSearch);
             Controls.Add(txtSearchId);
             Controls.Add(lblSearchId);
@@ -331,6 +370,9 @@ namespace BaobabRidge.PresentationLayer
         private Button btnSearch = null!;
         private Button btnSaveChanges = null!;
         private Button btnClear = null!;
+        private Button btnDelete = null!;
+        private Button btnGenerateSummary = null!;
+        private TextBox txtSummary = null!;
         private DataGridViewTextBoxColumn colId = null!;
         private DataGridViewTextBoxColumn colName = null!;
         private DataGridViewTextBoxColumn colSpecies = null!;
