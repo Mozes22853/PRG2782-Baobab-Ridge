@@ -10,22 +10,23 @@ namespace BaobabRidge.PresentationLayer
         // Shortens the grid and places the Delete action alongside the existing search controls.
         private void InitializeMember4Controls()
         {
-            dgvAnimals.Height = 295;
-            lblSearchId.Top = 423;
-            txtSearchId.Top = 420;
-            btnSearch.Top = 416;
+            dgvAnimals.Height = 438;
+            lblSearchId.Top = 575;
+            txtSearchId.Top = 572;
+            btnSearch.Top = 568;
 
             btnDelete = new Button
             {
                 Name = "btnDelete",
                 Text = "Delete selected",
-                Location = new Point(750, 416),
+                Location = new Point(750, 568),
                 Size = new Size(135, 34),
                 TabIndex = 10,
                 UseVisualStyleBackColor = true
             };
             btnDelete.Click += btnDelete_Click;
             Controls.Add(btnDelete);
+            btnDelete.BringToFront();
         }
 
         // Validates the grid selection, asks permission and deletes one valid matching record.
