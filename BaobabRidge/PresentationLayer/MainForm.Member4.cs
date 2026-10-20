@@ -2,32 +2,9 @@ using BaobabRidge.BusinessLogicLayer;
 
 namespace BaobabRidge.PresentationLayer
 {
-    // Member 4's Delete feature is separate from the existing Add/View/Update handlers.
+    // Member 4's Delete handler shares the controls declared in MainForm.Designer.cs.
     public partial class MainForm
     {
-        private Button btnDelete = null!;
-
-        // Shortens the grid and places the Delete action alongside the existing search controls.
-        private void InitializeMember4Controls()
-        {
-            dgvAnimals.Height = 295;
-            lblSearchId.Top = 423;
-            txtSearchId.Top = 420;
-            btnSearch.Top = 416;
-
-            btnDelete = new Button
-            {
-                Name = "btnDelete",
-                Text = "Delete selected",
-                Location = new Point(750, 416),
-                Size = new Size(135, 34),
-                TabIndex = 10,
-                UseVisualStyleBackColor = true
-            };
-            btnDelete.Click += btnDelete_Click;
-            Controls.Add(btnDelete);
-        }
-
         // Validates the grid selection, asks permission and deletes one valid matching record.
         private void btnDelete_Click(object? sender, EventArgs e)
         {

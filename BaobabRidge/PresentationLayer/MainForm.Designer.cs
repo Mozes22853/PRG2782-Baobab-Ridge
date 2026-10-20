@@ -42,6 +42,7 @@ namespace BaobabRidge.PresentationLayer
             btnSearch = new Button();
             btnSaveChanges = new Button();
             btnClear = new Button();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
             SuspendLayout();
             //
@@ -178,10 +179,10 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.AllowUserToDeleteRows = false;
             dgvAnimals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAnimals.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvAnimals.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAnimals.BackgroundColor = SystemColors.Window;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -193,7 +194,7 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.ReadOnly = true;
             dgvAnimals.RowHeadersVisible = false;
             dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAnimals.Size = new Size(826, 438);
+            dgvAnimals.Size = new Size(826, 295);
             dgvAnimals.TabIndex = 6;
             dgvAnimals.CellClick += dgvAnimals_CellClick;
             //
@@ -227,14 +228,14 @@ namespace BaobabRidge.PresentationLayer
             //
             // lblSearchId
             //
-            lblSearchId.Location = new Point(330, 575);
+            lblSearchId.Location = new Point(330, 423);
             lblSearchId.Name = "lblSearchId";
             lblSearchId.Size = new Size(95, 23);
             lblSearchId.Text = "Search by ID";
             //
             // txtSearchId
             //
-            txtSearchId.Location = new Point(430, 572);
+            txtSearchId.Location = new Point(430, 420);
             txtSearchId.Name = "txtSearchId";
             txtSearchId.Size = new Size(160, 23);
             txtSearchId.TabIndex = 8;
@@ -243,13 +244,23 @@ namespace BaobabRidge.PresentationLayer
             //
             // btnSearch
             //
-            btnSearch.Location = new Point(610, 568);
+            btnSearch.Location = new Point(610, 416);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(110, 32);
             btnSearch.TabIndex = 9;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
+            //
+            // btnDelete
+            //
+            btnDelete.Location = new Point(750, 416);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(135, 34);
+            btnDelete.TabIndex = 10;
+            btnDelete.Text = "Delete selected";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             //
             // lblLoadNotice
             //
@@ -273,7 +284,9 @@ namespace BaobabRidge.PresentationLayer
             AcceptButton = btnAdd;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             ClientSize = new Size(1180, 750);
+            Controls.Add(btnDelete);
             Controls.Add(btnSearch);
             Controls.Add(txtSearchId);
             Controls.Add(lblSearchId);
@@ -331,6 +344,7 @@ namespace BaobabRidge.PresentationLayer
         private Button btnSearch = null!;
         private Button btnSaveChanges = null!;
         private Button btnClear = null!;
+        private Button btnDelete = null!;
         private DataGridViewTextBoxColumn colId = null!;
         private DataGridViewTextBoxColumn colName = null!;
         private DataGridViewTextBoxColumn colSpecies = null!;

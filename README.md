@@ -49,7 +49,8 @@ The first commit contains only the blank Windows Forms project, `.gitignore`, an
 - **Member 1 implemented:** animal model, one classification method, shared input validation, Add, duplicate checking, UTF-8 append, field-specific feedback/focus, displayed classification, cleared inputs, and grid refresh.
 - **Member 2 integrated:** startup loading, exact read-only grid columns in file order, missing-file creation, friendly file errors, skipped-line notification, and 12 starter animals across all five statuses.
 - **Member 3 integrated:** exact case-insensitive ID search, row selection, shared validation and classification on Save Changes, immutable ID, Add/Edit button states, Clear, and automatic grid refresh. Update matches only valid file records and refuses ambiguous valid IDs. It writes a temporary file beside the original and replaces the original only after writing succeeds.
-- **Pending Member 4:** Delete and Summary Report.
+- **Member 4 Delete integrated:** row selection checks, Yes/No confirmation showing ID and name, one-record deletion, refresh and clearing of the deleted record's edit form. Unrelated file bytes are preserved, and stale or ambiguous selections are rejected.
+- **Pending Member 4:** Summary Report.
 
 ## File formats
 
@@ -65,15 +66,17 @@ WR-0001|Thabo|African Penguin|4|85|Release-Ready|Pre-Release Camp
 
 Run `dotnet run --project Member1Checks/Member1Checks.csproj --configuration Release` on Windows. This package-free checks program exercises validation, classification endpoints, append preservation, duplicate detection, malformed records, read-only/locked files, and the form's Add, Search, row-selection, Save Changes and Clear events. It also checks the malformed-ID update regression, ambiguous IDs, button states and visible control positions. The form opens briefly during UI checks. File fixtures use temporary paths or the checks project's output copy and are restored afterward.
 
+Run the layout checks in separate processes at representative font sizes with `dotnet run --project Member1Checks/Member1Checks.csproj --configuration Release -- --layout-font 9` (repeat with `11.25`, `13.5` and `18`). These exercise WinForms font auto-scaling and smaller-window scrolling. All controls, including Delete, are positioned in `MainForm.Designer.cs`; the Delete handler helper opens as code and has no separate resource file.
+
 See [Member 1 handover](docs/member-1-handover.md) for requirements, shared-method use, manual demonstration steps, and work still needed for submission. Lecture concepts are recorded there; supplied lecture files are not uploaded to this repository.
 
 ## Known limitations
 
-- Delete and Summary Report are not yet implemented; the complete five-feature assignment is still in progress.
+- Summary Report is not yet implemented; the complete five-feature assignment is still in progress.
 - The file loader skips malformed records, including records whose status or housing disagrees with their recovery score. Add preserves existing malformed lines and reserves an ID if their first field matches the new ID.
 - Update refuses multiple valid records with the same ID rather than choosing one arbitrarily. Its temporary-file replacement protects the original during a failed write, but concurrent editing and stale-record conflict detection across separate application instances are not supported.
 - Update retains other line contents but writes Windows line endings and UTF-8 without a BOM. Runtime records are local to each running copy; GitHub does not synchronise runtime data between group members.
-- The form uses ordinary controls with fixed positions and sizes so members can edit it in the Visual Studio designer. Shrinking the window can hide controls; the layout does not automatically rearrange them.
+- The form uses ordinary designer controls and WinForms font auto-scaling. Controls do not automatically rearrange when the window shrinks; scrollbars provide access to the complete form on smaller displays. Font-scaling tests do not replace testing on the team's actual monitors and DPI settings.
 
 ## Git and submission requirements
 

@@ -14,7 +14,6 @@ namespace BaobabRidge.PresentationLayer
             InitializeComponent();
             fileHandler = new FileHandler();
             ConfigureGrid();
-            InitializeMember4Controls();
             SetEditMode(false);
         }
 
