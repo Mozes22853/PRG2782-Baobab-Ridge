@@ -30,6 +30,9 @@ internal static partial class Program
             CheckForm(args.Length > 0 ? args[0] : null);
             CheckUpdateFiles();
             CheckUpdateForm(args.Length > 0 ? args[0] : null);
+            CheckDeleteFiles();
+            CheckSummaryFiles();
+            CheckSummaryForm(args.Length > 0 ? args[0] : null);
             Console.WriteLine("PASS: " + checks + " checks.");
             return 0;
         }

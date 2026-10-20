@@ -57,7 +57,7 @@ The checks now exercise real Search, Save Changes, Clear and grid-click events, 
 
 Delete is integrated through its feature pull request. Its button is an ordinary control in `MainForm.Designer.cs`, and its event handler is in `MainForm.Member4.cs`; open that helper as code. Do not set control positions again in the form constructor after WinForms has auto-scaled them. The grid, Search controls and Delete button must scale together. Keep `AutoScroll` enabled for small windows. The helper has no separate `.resx`; only `MainForm.resx` supplies the form's resources.
 
-Implement Summary on its own branch and merge through a pull request. Complete group details and submission instructions in README. Summary must use current file data, exact spacing/layout, invariant two-decimal averages, all five statuses, and N/A averages for an empty dataset.
+Summary is implemented on `feature/summary-report` for integration through a pull request. `AnimalSummary` calculates totals and counts; `BuildReport` formats the required text. The Member 4 helper reads current disk data, updates `txtSummary`, and calls `TryWriteSummary`. A complete temporary file is created before replacing an older report. Read/write failures give friendly feedback and preserve the previous saved report. Empty data uses N/A averages and all zero counts. Keep the button and report box in `MainForm.Designer.cs`. Group details and submission evidence still need confirmation.
 
 ## Validation performed
 
@@ -95,7 +95,7 @@ Every member needs at least three meaningful presentation minutes. The whole pre
 
 ## Submission requirements still outstanding
 
-- Summary and final integration of all five features. Add, View, Update, Delete and starter records are integrated.
+- All five application features are implemented; verify the final GitHub main and rehearse the complete demonstration.
 - Member names/student numbers and lecturer access to the private repository.
 - At least 15 meaningful commits across the group, each member's own contribution, and activity on at least three different days. Today's commits count as one day only.
 - At least one merged pull request per member and one feature branch for each of the five features.

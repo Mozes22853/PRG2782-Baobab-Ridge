@@ -20,6 +20,17 @@ internal static partial class Program
             delete.PerformClick();
             Label feedback = (Label)form.Controls.Find("lblFeedback", true)[0];
             Check(feedback.Text.Contains("Please select an animal row"), "Delete click remains connected to the selection validation handler");
+            Button generate = (Button)form.Controls.Find("btnGenerateSummary", true)[0];
+            TextBox summary = (TextBox)form.Controls.Find("txtSummary", true)[0];
+            Label notice = (Label)form.Controls.Find("lblLoadNotice", true)[0];
+            Check(generate.Parent == form && summary.Parent == form && generate.Dock == DockStyle.None,
+                "Summary controls remain ordinary designer controls");
+            Check(generate.Top >= actions.Max(control => control.Bottom), "Summary button stays below grid actions");
+            Check(summary.Top >= generate.Bottom && summary.Left >= grid.Left && summary.Right <= grid.Right,
+                "Summary display stays below its button inside the grid column");
+            Check(notice.Top >= summary.Bottom, "Summary does not overlap the load notice");
+            Check(summary.ReadOnly && summary.Multiline && summary.ScrollBars == ScrollBars.Both,
+                "Summary remains readable and scrollable at larger fonts");
             foreach (Control action in actions)
             {
                 Check(action.Parent == form && action.Dock == DockStyle.None, action.Name + " remains an ordinary designer control");
@@ -38,6 +49,7 @@ internal static partial class Program
             Check(grid.Rows[0].InheritedStyle.Font!.Size == grid.Font.Size, "Grid cells inherit the scaled font");
             if (imagePath != null)
             {
+                generate.PerformClick();
                 using (Bitmap image = new Bitmap(form.Width, form.Height))
                 {
                     form.DrawToBitmap(image, new Rectangle(0, 0, form.Width, form.Height));
