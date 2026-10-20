@@ -96,7 +96,7 @@ Every member needs at least three meaningful presentation minutes. The whole pre
 ## Submission requirements still outstanding
 
 - All five application features are implemented; verify the final GitHub main and rehearse the complete demonstration.
-- Member names/student numbers and lecturer access to the private repository.
+- Confirm lecturer access: public repository or lecturer collaborator access if private. All four member names and student numbers are recorded in README.
 - At least 15 meaningful commits across the group, each member's own contribution, and activity on at least three different days. Today's commits count as one day only.
 - At least one merged pull request per member and one feature branch for each of the five features.
 - Final fresh-clone build/demo of all features, matching GitHub main and the submitted ZIP.

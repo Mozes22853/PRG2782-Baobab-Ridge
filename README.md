@@ -44,7 +44,7 @@ The first commit contains only the blank Windows Forms project, `.gitignore`, an
 | 1 | Marius Tjaart van der walt | 603855 | Model, shared classification/validation, Add |
 | 2 | Gift Mathe | 600731 | View, shared file error handling, starter data |
 | 3 | Nedhil Deolal | 605115 | Update |
-| 4 | Details to be added later | Pending | Delete, Summary, repository documentation |
+| 4 | Thabiso Mahlatse Mokhosoa | 601695 | Delete, Summary, repository documentation |
 
 ## Feature status
 
@@ -86,7 +86,7 @@ See [Member 1 handover](docs/member-1-handover.md) for requirements, shared-meth
 - The group needs at least 15 commits in total. Each member must make at least three meaningful commits under their own name and email, across at least three different days. Integration assistance and merge commits do not establish another member's personal contribution. Contribution-day requirements remain to be completed where outstanding.
 - Begin commit messages with a descriptive verb such as **Add**, **Fix** or **Implement**. Push at the end of each work session and after finishing a feature. The demonstrated and submitted code must match GitHub `main`.
 - Keep `bin/`, `obj/`, `.vs/`, generated reports and temporary files out of Git. Preserve the repository history; do not delete/recreate the repository or force-push to rewrite history.
-- Add Member 4's name and student number when supplied. Before submission, confirm lecturer access: the repository must be public, or the lecturer's GitHub account must be added as a collaborator if it remains private. Lecturer access has not been confirmed here.
+- Before submission, confirm lecturer access: the repository must be public, or the lecturer's GitHub account must be added as a collaborator if it remains private. Lecturer access has not been confirmed here.
 
 ## Assistance disclosure
 
