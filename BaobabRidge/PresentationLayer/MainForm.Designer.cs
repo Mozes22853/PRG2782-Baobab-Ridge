@@ -42,6 +42,7 @@ namespace BaobabRidge.PresentationLayer
             btnSearch = new Button();
             btnSaveChanges = new Button();
             btnClear = new Button();
+            btnDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvAnimals).BeginInit();
             SuspendLayout();
             // 
@@ -184,6 +185,7 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.AllowUserToDeleteRows = false;
             dgvAnimals.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvAnimals.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgvAnimals.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvAnimals.BackgroundColor = SystemColors.Window;
             dgvAnimals.ColumnHeadersHeight = 29;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -347,6 +349,7 @@ namespace BaobabRidge.PresentationLayer
         private Button btnSearch = null!;
         private Button btnSaveChanges = null!;
         private Button btnClear = null!;
+        private Button btnDelete = null!;
         private DataGridViewTextBoxColumn colId = null!;
         private DataGridViewTextBoxColumn colName = null!;
         private DataGridViewTextBoxColumn colSpecies = null!;

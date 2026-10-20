@@ -15,6 +15,14 @@ internal static partial class Program
     {
         try
         {
+            if (args.Length >= 2 && args[0] == "--layout-font")
+            {
+                // Run font-scaling checks in a separate process before any controls are created.
+                Application.SetDefaultFont(new Font("Segoe UI", float.Parse(args[1], CultureInfo.InvariantCulture)));
+                CheckScaledLayout(args.Length > 2 ? args[2] : null);
+                Console.WriteLine("PASS: " + checks + " layout checks at font " + args[1] + ".");
+                return 0;
+            }
             Directory.CreateDirectory(testFolder);
             CheckClassification();
             CheckValidation();

@@ -7,6 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="PresentationLayer/MainForm.Member4.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <!-- This helper is part of MainForm, not a second form with its own resources. -->
+    <EmbeddedResource Remove="PresentationLayer/MainForm.Member4.resx" />
     <None Update="animals.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
