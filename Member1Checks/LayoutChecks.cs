@@ -14,6 +14,12 @@ internal static partial class Program
             DataGridView grid = (DataGridView)form.Controls.Find("dgvAnimals", true)[0];
             Control[] actions = new[] { "lblSearchId", "txtSearchId", "btnSearch", "btnDelete" }
                 .Select(name => form.Controls.Find(name, true)[0]).ToArray();
+            Button delete = (Button)actions[3];
+            Check(delete.Visible && delete.Enabled && delete.Text == "Delete selected", "Delete remains visible and usable after designer merges");
+            grid.ClearSelection();
+            delete.PerformClick();
+            Label feedback = (Label)form.Controls.Find("lblFeedback", true)[0];
+            Check(feedback.Text.Contains("Please select an animal row"), "Delete click remains connected to the selection validation handler");
             foreach (Control action in actions)
             {
                 Check(action.Parent == form && action.Dock == DockStyle.None, action.Name + " remains an ordinary designer control");
