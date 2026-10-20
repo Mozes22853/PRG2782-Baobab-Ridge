@@ -196,7 +196,7 @@ namespace BaobabRidge.PresentationLayer
             dgvAnimals.ReadOnly = true;
             dgvAnimals.RowHeadersVisible = false;
             dgvAnimals.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvAnimals.Size = new Size(826, 295);
+            dgvAnimals.Size = new Size(826, 438);
             dgvAnimals.TabIndex = 6;
             dgvAnimals.CellClick += dgvAnimals_CellClick;
             //
@@ -230,14 +230,14 @@ namespace BaobabRidge.PresentationLayer
             //
             // lblSearchId
             //
-            lblSearchId.Location = new Point(330, 423);
+            lblSearchId.Location = new Point(330, 575);
             lblSearchId.Name = "lblSearchId";
             lblSearchId.Size = new Size(95, 23);
             lblSearchId.Text = "Search by ID";
             //
             // txtSearchId
             //
-            txtSearchId.Location = new Point(430, 420);
+            txtSearchId.Location = new Point(430, 572);
             txtSearchId.Name = "txtSearchId";
             txtSearchId.Size = new Size(160, 23);
             txtSearchId.TabIndex = 8;
@@ -246,7 +246,7 @@ namespace BaobabRidge.PresentationLayer
             //
             // btnSearch
             //
-            btnSearch.Location = new Point(610, 416);
+            btnSearch.Location = new Point(610, 568);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(110, 32);
             btnSearch.TabIndex = 9;
@@ -256,7 +256,7 @@ namespace BaobabRidge.PresentationLayer
             //
             // btnDelete
             //
-            btnDelete.Location = new Point(750, 416);
+            btnDelete.Location = new Point(750, 568);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(135, 34);
             btnDelete.TabIndex = 10;
@@ -266,7 +266,7 @@ namespace BaobabRidge.PresentationLayer
             //
             // lblLoadNotice
             //
-            lblLoadNotice.Location = new Point(24, 775);
+            lblLoadNotice.Location = new Point(24, 930);
             lblLoadNotice.Name = "lblLoadNotice";
             lblLoadNotice.Size = new Size(1132, 25);
             lblLoadNotice.TabIndex = 26;
@@ -274,7 +274,7 @@ namespace BaobabRidge.PresentationLayer
             // lblFeedback
             //
             lblFeedback.BackColor = SystemColors.ControlLight;
-            lblFeedback.Location = new Point(24, 812);
+            lblFeedback.Location = new Point(24, 967);
             lblFeedback.Name = "lblFeedback";
             lblFeedback.Padding = new Padding(8);
             lblFeedback.Size = new Size(1132, 43);
@@ -283,7 +283,7 @@ namespace BaobabRidge.PresentationLayer
             //
             // btnGenerateSummary
             //
-            btnGenerateSummary.Location = new Point(330, 465);
+            btnGenerateSummary.Location = new Point(330, 620);
             btnGenerateSummary.Name = "btnGenerateSummary";
             btnGenerateSummary.Size = new Size(175, 34);
             btnGenerateSummary.TabIndex = 11;
@@ -294,7 +294,7 @@ namespace BaobabRidge.PresentationLayer
             // txtSummary
             //
             txtSummary.AccessibleName = "Animal summary report";
-            txtSummary.Location = new Point(330, 510);
+            txtSummary.Location = new Point(330, 665);
             txtSummary.Name = "txtSummary";
             txtSummary.Size = new Size(826, 250);
             txtSummary.Multiline = true;
@@ -309,7 +309,7 @@ namespace BaobabRidge.PresentationLayer
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(1180, 880);
+            ClientSize = new Size(1180, 1040);
             Controls.Add(txtSummary);
             Controls.Add(btnGenerateSummary);
             Controls.Add(btnDelete);

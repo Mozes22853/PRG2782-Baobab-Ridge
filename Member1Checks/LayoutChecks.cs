@@ -62,6 +62,12 @@ internal static partial class Program
             form.ScrollControlIntoView(actions[3]);
             Application.DoEvents();
             Check(form.ClientRectangle.Contains(actions[3].Bounds), "Delete can be scrolled fully into view in a smaller window");
+            form.ScrollControlIntoView(generate);
+            Application.DoEvents();
+            Check(form.ClientRectangle.Contains(generate.Bounds), "Generate Summary can be reached below the larger grid in a small window");
+            form.ScrollControlIntoView(summary);
+            Application.DoEvents();
+            Check(form.ClientRectangle.IntersectsWith(summary.Bounds), "Summary report remains reachable by scrolling in a small window");
             form.Close();
         }
     }
